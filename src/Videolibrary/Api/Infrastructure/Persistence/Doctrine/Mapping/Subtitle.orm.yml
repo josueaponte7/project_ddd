@@ -1,0 +1,18 @@
+Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Subtitle:
+  type: entity
+  table: subtitle
+  id:
+    id:
+      type: uuid
+  fields:
+    language:
+      type: string
+      nullable: false
+      length: 2
+  manyToOne:
+    video:
+      targetEntity: Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Video
+      inversedBy: video
+      joinColumn:
+        nullable: false
+  lifecycleCallbacks: { }

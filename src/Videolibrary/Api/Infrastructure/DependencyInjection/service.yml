@@ -1,0 +1,3 @@
+services:
+  api.services.uuiIdStringGenerator:
+    class: Videolibrary\Api\Infrastructure\Service\UuidIdStringGenerator

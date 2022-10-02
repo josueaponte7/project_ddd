@@ -1,0 +1,36 @@
+Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Video:
+  type: entity
+  table: video
+  id:
+    id:
+      type: uuid
+  fields:
+    title:
+      type: string
+      nullable: false
+      length: 255
+    duration:
+      type: integer
+      nullable: false
+      precision: 10
+      scale: 0
+    status:
+      type: string
+      nullable: false
+      length: 20
+      options:
+        fixed: false
+      column: status
+    createdAt:
+      type: datetime
+      nullable: true
+      column: created_at
+    updatedAt:
+      type: datetime
+      nullable: true
+      column: update_at
+  oneToMany:
+    subtitles:
+      targetEntity: Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Subtitle
+      mappedBy: video
+  lifecycleCallbacks: { }
