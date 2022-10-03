@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Videolibrary\Api\Application\Response\Video;
+namespace Videolibrary\Api\Application\Response\Video;
 
-use Videolibrary\Api\Application\Response\Video\VideoResponse;
 use Videolibrary\Api\Domain\Model\Video\VideoCollection;
 
 class VideoCollectionResponse
 {
     private array $videos;
-    
+
     public function __construct(VideoCollection $videoCollection)
     {
         $this->videos = [];
@@ -16,17 +15,16 @@ class VideoCollectionResponse
             $this->videos[] = new VideoResponse($video);
         }
     }
-    
+
     public function videos(): array
     {
         return $this->videos;
     }
-    
-    public function toArray()
+
+    public function toArray(): array
     {
         return array_map(function ($video) {
             return $video->toArray();
-        },
-            $this->videos);
+        }, $this->videos);
     }
 }

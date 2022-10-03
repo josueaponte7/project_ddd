@@ -33,4 +33,5 @@ Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Video:
     subtitles:
       targetEntity: Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Subtitle
       mappedBy: video
+      cascade: [ "persist" ]
   lifecycleCallbacks: { }

@@ -3,7 +3,7 @@
 namespace Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity;
 
 use DateTimeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class Video
 {
@@ -11,7 +11,7 @@ class Video
     private string $title;
     private int $duration;
     private string $status;
-    private ArrayCollection $subtitles;
+    private Collection $subtitles;
     private DateTimeInterface $createdAt;
     private DateTimeInterface $updatedAt;
 
@@ -20,7 +20,7 @@ class Video
         string $title,
         int $duration,
         string $status,
-        ArrayCollection $subtitles,
+        Collection $subtitles,
         DateTimeInterface $createdAt,
         DateTimeInterface $updatedAt,
     ) {
@@ -64,9 +64,14 @@ class Video
         return $this->updatedAt;
     }
 
-    public function subtitles(): ArrayCollection
+    public function addSubtitle(Subtitle $subtitle): void
+    {
+        $subtitle->setVideo($this);
+        $this->subtitles->add($subtitle);
+    }
+
+    public function subtitles(): Collection
     {
         return $this->subtitles;
     }
-
 }

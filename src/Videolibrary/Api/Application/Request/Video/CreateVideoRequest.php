@@ -32,7 +32,7 @@ class CreateVideoRequest
     {
         return $this->status;
     }
-    
+
     public function subtitles(): array
     {
         return $this->subtitles;

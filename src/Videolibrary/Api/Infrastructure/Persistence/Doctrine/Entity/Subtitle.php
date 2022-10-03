@@ -8,11 +8,10 @@ class Subtitle
     private string $language;
     private Video $video;
 
-    public function __construct(string $id, string $language, Video $video)
+    public function __construct(string $id, string $language)
     {
         $this->id = $id;
         $this->language = $language;
-        $this->video = $video;
     }
 
     public function id(): string
@@ -30,5 +29,9 @@ class Subtitle
         return $this->video;
     }
 
+    public function setVideo(Video $video): void
+    {
+        $this->video = $video;
+    }
 
 }

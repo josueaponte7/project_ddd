@@ -10,11 +10,10 @@ class Subtitle
     private string $language;
     private Video $video;
 
-    public function __construct(SubtitleId $id, string $language, Video $video)
+    public function __construct(SubtitleId $id, string $language)
     {
         $this->id = $id;
         $this->language = $language;
-        $this->video = $video;
     }
 
     public function id(): SubtitleId
