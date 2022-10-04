@@ -2,7 +2,7 @@
 
 namespace Videolibrary\Api\Infrastructure\Persistence\InMemory\Repository;
 
-use Videolibrary\Api\Domain\Model\Video\Status;
+use App\Videolibrary\Api\Domain\Model\Status\Status;
 use Videolibrary\Api\Domain\Model\Video\Video;
 use Videolibrary\Api\Domain\Model\Video\VideoCollection;
 use Videolibrary\Api\Domain\Model\Video\VideoId;

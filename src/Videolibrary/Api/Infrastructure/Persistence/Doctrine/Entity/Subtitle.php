@@ -2,6 +2,8 @@
 
 namespace Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity;
 
+use Videolibrary\Api\Domain\Model\Subtitle\Subtitle as SubtitleDomain;
+
 class Subtitle
 {
     private string $id;
@@ -12,6 +14,14 @@ class Subtitle
     {
         $this->id = $id;
         $this->language = $language;
+    }
+
+    public static function fromDomain(SubtitleDomain $subtitle): self
+    {
+        return new self(
+            $subtitle->id()->value(),
+            $subtitle->language(),
+        );
     }
 
     public function id(): string
@@ -33,5 +43,4 @@ class Subtitle
     {
         $this->video = $video;
     }
-
 }

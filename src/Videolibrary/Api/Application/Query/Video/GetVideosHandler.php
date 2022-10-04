@@ -3,10 +3,10 @@
 namespace Videolibrary\Api\Application\Query\Video;
 
 
+use App\Videolibrary\Api\Domain\Model\Status\Status;
 use Videolibrary\Api\Application\Request\Video\GetVideoRequest;
 use Videolibrary\Api\Application\Response\Video\VideoCollectionResponse;
 use Videolibrary\Api\Domain\Model\Video\InvalidStatusValueException;
-use Videolibrary\Api\Domain\Model\Video\Status;
 use Videolibrary\Api\Domain\Model\Video\VideoRepositoryInterface;
 
 class GetVideosHandler

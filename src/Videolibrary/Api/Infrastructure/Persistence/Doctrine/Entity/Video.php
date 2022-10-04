@@ -3,7 +3,10 @@
 namespace Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Videolibrary\Api\Domain\Model\Video\InvalidStatusValueException;
+use Videolibrary\Api\Domain\Model\Video\Video as VideoDomain;
 
 class Video
 {
@@ -21,6 +24,31 @@ class Video
     ) {
     }
 
+    public static function fromDomain(VideoDomain $video): self
+    {
+        $subtitles = new ArrayCollection();
+        if (!$video->subtitles()->isEmpty()) {
+            foreach ($video->subtitles()->getCollection() as $subtitle) {
+                $subtitles->add(Subtitle::fromDomain($subtitle));
+            }
+        }
+
+        return new self(
+            $video->id()->value(),
+            $video->title(),
+            $video->duration(),
+            $video->status()->value(),
+            $subtitles,
+            $video->image(),
+            $video->createdAt(),
+            $video->updatedAt(),
+        );
+    }
+
+    public function subtitles(): ?Collection
+    {
+        return $this->subtitles;
+    }
 
     public function id(): string
     {
@@ -42,11 +70,6 @@ class Video
         return $this->status;
     }
 
-    public function subtitles(): ?Collection
-    {
-        return $this->subtitles;
-    }
-
     public function image(): string
     {
         return $this->image;
@@ -66,6 +89,23 @@ class Video
     {
         $subtitle->setVideo($this);
         $this->subtitles->add($subtitle);
+    }
+
+
+    /**
+     * @throws InvalidStatusValueException
+     */
+    public function toDomain(): VideoDomain
+    {
+        return VideoDomain::fromPrimitive(
+            $this->id(),
+            $this->title(),
+            $this->duration(),
+            $this->status(),
+            $this->image(),
+            $this->createdAt(),
+            $this->updatedAt(),
+        );
     }
 
 }

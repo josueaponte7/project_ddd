@@ -2,14 +2,12 @@
 
 namespace Videolibrary\Api\Application\Command\Video;
 
-use DateTimeImmutable;
 use Videolibrary\Api\Application\Request\Video\CreateVideoRequest;
 use Videolibrary\Api\Application\Response\Video\VideoResponse;
 use Videolibrary\Api\Domain\Model\Subtitle\Subtitle;
 use Videolibrary\Api\Domain\Model\Subtitle\SubtitleCollection;
 use Videolibrary\Api\Domain\Model\Subtitle\SubtitleId;
 use Videolibrary\Api\Domain\Model\Video\InvalidStatusValueException;
-use Videolibrary\Api\Domain\Model\Video\Status;
 use Videolibrary\Api\Domain\Model\Video\Video;
 use Videolibrary\Api\Domain\Model\Video\VideoId;
 use Videolibrary\Api\Domain\Model\Video\VideoRepositoryInterface as VideoRepository;
@@ -31,16 +29,14 @@ class CreateVideoHandler
      */
     public function __invoke(CreateVideoRequest $createVideoRequest): VideoResponse
     {
-        $video = new Video(
+        $video = Video::create(
             new VideoId($this->idStringGenerator->generate()),
             $createVideoRequest->title(),
             $createVideoRequest->duration(),
-            new Status($createVideoRequest->status()),
-            $this->buildSubtitleCollection($createVideoRequest->subtitles()),
             $createVideoRequest->image(),
-            new DateTimeImmutable(),
-            null
+            $this->buildSubtitleCollection($createVideoRequest->subtitles()),
         );
+
         $this->videoRepository->insert($video);
 
         return new VideoResponse($video);
