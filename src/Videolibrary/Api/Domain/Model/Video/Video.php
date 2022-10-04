@@ -9,19 +9,20 @@ use Videolibrary\Api\Domain\Model\Subtitle\SubtitleCollection;
 
 class Video
 {
-    private readonly VideoId $id;
-    private readonly string $title;
-    private readonly int $duration;
-    private readonly Status $status;
-    private readonly ?SubtitleCollection $subtitles;
-    private readonly string $image;
-    private readonly DateTimeInterface $createdAt;
-    private readonly ?DateTimeInterface $updatedAt;
-
+    private VideoId $id;
+    private string $title;
+    private int $duration;
+    private Status $status;
+    private ?SubtitleCollection $subtitles;
+    private string $image;
+    private DateTimeInterface $createdAt;
+    private ?DateTimeInterface $updatedAt;
+    private bool $flat;
+    
     private function __construct()
     {
     }
-
+    
     public static function create(
         VideoId $id,
         string $title,
@@ -38,10 +39,10 @@ class Video
         $video->subtitles = $subtitles;
         $video->createdAt = new DateTimeImmutable();
         $video->updatedAt = null;
-
+        
         return $video;
     }
-
+    
     /**
      * @throws InvalidStatusValueException
      */
@@ -63,48 +64,48 @@ class Video
         $video->image = $image;
         $video->createdAt = $createdAt;
         $video->updatedAt = $updatedAt;
-
+        
         return $video;
     }
-
+    
     public function id(): VideoId
     {
         return $this->id;
     }
-
+    
     public function title(): string
     {
         return $this->title;
     }
-
+    
     public function duration(): int
     {
         return $this->duration;
     }
-
+    
     public function status(): Status
     {
         return $this->status;
     }
-
+    
     public function createdAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
-
+    
     public function updatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
-
+    
     public function subtitles(): ?SubtitleCollection
     {
         return $this->subtitles;
     }
-
+    
     public function image(): string
     {
         return $this->image;
     }
-
+    
 }
