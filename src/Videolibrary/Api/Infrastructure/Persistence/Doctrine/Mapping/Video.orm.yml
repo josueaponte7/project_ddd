@@ -29,6 +29,10 @@ Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Video:
       type: datetime
       nullable: true
       column: update_at
+    image:
+      type: string
+      nullable: false
+      length: 255
   oneToMany:
     subtitles:
       targetEntity: Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Subtitle

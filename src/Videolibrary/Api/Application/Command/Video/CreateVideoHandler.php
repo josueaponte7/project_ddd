@@ -2,6 +2,7 @@
 
 namespace Videolibrary\Api\Application\Command\Video;
 
+use DateTimeImmutable;
 use Videolibrary\Api\Application\Request\Video\CreateVideoRequest;
 use Videolibrary\Api\Application\Response\Video\VideoResponse;
 use Videolibrary\Api\Domain\Model\Subtitle\Subtitle;
@@ -36,6 +37,9 @@ class CreateVideoHandler
             $createVideoRequest->duration(),
             new Status($createVideoRequest->status()),
             $this->buildSubtitleCollection($createVideoRequest->subtitles()),
+            $createVideoRequest->image(),
+            new DateTimeImmutable(),
+            null
         );
         $this->videoRepository->insert($video);
 

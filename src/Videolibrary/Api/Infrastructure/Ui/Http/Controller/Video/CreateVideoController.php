@@ -25,6 +25,7 @@ class CreateVideoController
                 $request->get('duration'),
                 $request->get('status'),
                 $request->get('subtitles'),
+                $request->get('image'),
             ));
 
             $response = new JsonResponse(

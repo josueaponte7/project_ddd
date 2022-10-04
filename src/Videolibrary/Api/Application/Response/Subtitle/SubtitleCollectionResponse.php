@@ -8,11 +8,13 @@ class SubtitleCollectionResponse
 {
     private array $subtitles;
 
-    public function __construct(SubtitleCollection $subtitles)
+    public function __construct(?SubtitleCollection $subtitles)
     {
         $this->subtitles = [];
-        foreach ($subtitles->getCollection() as $subtitle) {
-            $this->subtitles[] = new SubtitleResponse($subtitle);
+        if (!empty($subtitles)) {
+            foreach ($subtitles->getCollection() as $subtitle) {
+                $this->subtitles[] = new SubtitleResponse($subtitle);
+            }
         }
     }
 

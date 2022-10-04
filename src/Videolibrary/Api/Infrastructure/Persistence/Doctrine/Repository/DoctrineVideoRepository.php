@@ -46,6 +46,10 @@ class DoctrineVideoRepository extends DoctrineRepository implements VideoReposit
             $video->title(),
             $video->duration(),
             new Status($video->status()),
+            null,
+            $video->image(),
+            $video->createdAt(),
+            null,
         );
     }
 
@@ -63,6 +67,7 @@ class DoctrineVideoRepository extends DoctrineRepository implements VideoReposit
             $video->duration(),
             $video->status()->value(),
             new ArrayCollection(),
+            $video->image(),
             $video->createdAt(),
             $video->updatedAt(),
         );

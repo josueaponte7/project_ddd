@@ -7,30 +7,18 @@ use Doctrine\Common\Collections\Collection;
 
 class Video
 {
-    private string $id;
-    private string $title;
-    private int $duration;
-    private string $status;
-    private Collection $subtitles;
-    private DateTimeInterface $createdAt;
-    private DateTimeInterface $updatedAt;
 
     public function __construct(
-        string $id,
-        string $title,
-        int $duration,
-        string $status,
-        Collection $subtitles,
-        DateTimeInterface $createdAt,
-        DateTimeInterface $updatedAt,
+        private string $id,
+        private string $title,
+        private int $duration,
+        private string $status,
+        private ?Collection $subtitles,
+        private string $image,
+        private DateTimeInterface $createdAt,
+        private ?DateTimeInterface $updatedAt,
+
     ) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->duration = $duration;
-        $this->status = $status;
-        $this->subtitles = $subtitles;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
     }
 
 
@@ -54,12 +42,22 @@ class Video
         return $this->status;
     }
 
+    public function subtitles(): ?Collection
+    {
+        return $this->subtitles;
+    }
+
+    public function image(): string
+    {
+        return $this->image;
+    }
+
     public function createdAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function updatedAt(): DateTimeInterface
+    public function updatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
@@ -70,8 +68,4 @@ class Video
         $this->subtitles->add($subtitle);
     }
 
-    public function subtitles(): Collection
-    {
-        return $this->subtitles;
-    }
 }
