@@ -17,13 +17,13 @@ class CreateVideoHandler
 {
     private VideoRepository $videoRepository;
     private IdStringGenerator $idStringGenerator;
-
+    
     public function __construct(VideoRepository $videoRepository, IdStringGenerator $idStringGenerator)
     {
         $this->videoRepository = $videoRepository;
         $this->idStringGenerator = $idStringGenerator;
     }
-
+    
     /**
      * @throws InvalidStatusValueException
      */
@@ -37,24 +37,26 @@ class CreateVideoHandler
             $this->buildSubtitleCollection($createVideoRequest->subtitles()),
         );
         $this->videoRepository->insert($video);
-
+        
         return new VideoResponse($video);
     }
-
+    
     private function buildSubtitleCollection(array $subtitles): SubtitleCollection
     {
         $subtitleCollection = SubtitleCollection::init();
         if (!empty($subtitles)) {
             foreach ($subtitles as $subtitle) {
+                $language = $subtitle['language'];
+                $sub = $subtitle['subtitle'];
                 $subtitleCollection->add(
                     new Subtitle(
                         new SubtitleId($this->idStringGenerator->generate()),
-                        $subtitle,
+                        $language,
+                        $sub,
                     ),
                 );
             }
         }
-
         return $subtitleCollection;
     }
 }

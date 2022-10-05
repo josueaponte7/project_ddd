@@ -13,6 +13,10 @@ Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Subtitle:
       type: string
       nullable: false
       length: 2
+    subtitle:
+      type: string
+      nullable: false
+      length: 255
   manyToOne:
     video:
       targetEntity: Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Video
