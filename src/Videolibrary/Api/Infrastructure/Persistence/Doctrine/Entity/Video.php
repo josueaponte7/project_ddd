@@ -10,7 +10,6 @@ use Videolibrary\Api\Domain\Model\Video\Video as VideoDomain;
 
 class Video
 {
-
     public function __construct(
         private string $id,
         private string $title,
@@ -20,34 +19,27 @@ class Video
         private string $image,
         private DateTimeInterface $createdAt,
         private ?DateTimeInterface $updatedAt,
-
     ) {
     }
 
     public static function fromDomain(VideoDomain $video): self
     {
-        $subtitles = new ArrayCollection();
-        if (!$video->subtitles()->isEmpty()) {
-            foreach ($video->subtitles()->getCollection() as $subtitle) {
-                $subtitles->add(Subtitle::fromDomain($subtitle));
-            }
-        }
-
-        return new self(
+        $videoEntity = new self(
             $video->id()->value(),
             $video->title(),
             $video->duration(),
             $video->status()->value(),
-            $subtitles,
+            new ArrayCollection(),
             $video->image(),
             $video->createdAt(),
-            $video->updatedAt(),
+            null,
         );
-    }
-
-    public function subtitles(): ?Collection
-    {
-        return $this->subtitles;
+        if (!$video->subtitles()->isEmpty()) {
+            foreach ($video->subtitles()->getCollection() as $subtitle) {
+                $videoEntity->addSubtitle(Subtitle::fromDomain($subtitle));
+            }
+        }
+        return $videoEntity;
     }
 
     public function id(): string
@@ -80,9 +72,9 @@ class Video
         return $this->createdAt;
     }
 
-    public function updatedAt(): ?DateTimeInterface
+    public function subtitles(): ?Collection
     {
-        return $this->updatedAt;
+        return $this->subtitles;
     }
 
     public function addSubtitle(Subtitle $subtitle): void
@@ -90,7 +82,6 @@ class Video
         $subtitle->setVideo($this);
         $this->subtitles->add($subtitle);
     }
-
 
     /**
      * @throws InvalidStatusValueException
@@ -108,4 +99,8 @@ class Video
         );
     }
 
+    public function updatedAt(): ?DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
 }
