@@ -20,3 +20,14 @@
 ###< symfony/phpunit-bridge ###
 
 .idea/
+
+*.cache
+
+
+psalm.xml
+
+phpstan.neon
+
+.php_cs.dist.php
+
+.php_cs.dist
