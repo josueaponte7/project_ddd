@@ -20,3 +20,7 @@
 ###< symfony/phpunit-bridge ###
 
 .idea/
+
+.php-cs-fixer.cache
+
+.php_cs.dist.php
