@@ -11,7 +11,7 @@ class VideoResponse
     private string $title;
     private int $duration;
     private string $status;
-    private SubtitleCollectionResponse $subtitles;
+    private ?SubtitleCollectionResponse $subtitles;
     private string $image;
 
     public function __construct(Video $video)
@@ -20,7 +20,7 @@ class VideoResponse
         $this->title = $video->title();
         $this->duration = $video->duration();
         $this->status = $video->status()->value();
-        $this->subtitles = new SubtitleCollectionResponse($video->subtitles());
+        $this->subtitles = $video->subtitles() ? new SubtitleCollectionResponse($video->subtitles()) : null;
         $this->image = $video->image();
     }
 
@@ -44,7 +44,7 @@ class VideoResponse
         return $this->status;
     }
 
-    final public function subtitles(): SubtitleCollectionResponse
+    final public function subtitles(): ?SubtitleCollectionResponse
     {
         return $this->subtitles;
     }
@@ -62,7 +62,7 @@ class VideoResponse
             'title' => $this->title(),
             'duration' => $this->duration(),
             'status' => $this->status(),
-            'subtitles' => $this->subtitles()->toArray(),
+            'subtitles' => $this->subtitles()?->toArray(),
             'image' => $this->image(),
         ];
     }
