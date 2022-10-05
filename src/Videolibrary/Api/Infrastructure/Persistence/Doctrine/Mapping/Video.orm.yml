@@ -21,6 +21,13 @@ Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Video:
       options:
         fixed: false
       column: status
+    image:
+      type: string
+      nullable: false
+      length: 255
+      options:
+        fixed: false
+      column: image
     createdAt:
       type: datetime
       nullable: true

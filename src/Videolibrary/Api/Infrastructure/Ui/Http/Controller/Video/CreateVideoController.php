@@ -25,6 +25,7 @@ class CreateVideoController
                 $request->get('duration'),
                 $request->get('status'),
                 $request->get('subtitles'),
+                $request->get('image'),
             ));
 
             $response = new JsonResponse(
@@ -34,14 +35,16 @@ class CreateVideoController
                         $video->toArray(),
                     ],
                 ],
-                200);
+                200
+            );
         } catch (InvalidStatusValueException $e) {
             $response = new JsonResponse(
                 [
                     'status' => 'error',
                     'errorMessage' => 'Invalid status value',
                 ],
-                500);
+                500
+            );
         }
 
         return $response;

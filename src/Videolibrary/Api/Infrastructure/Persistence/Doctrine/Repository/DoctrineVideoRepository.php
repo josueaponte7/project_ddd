@@ -2,7 +2,6 @@
 
 namespace Videolibrary\Api\Infrastructure\Persistence\Doctrine\Repository;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Videolibrary\Api\Domain\Model\Subtitle\Subtitle;
 use Videolibrary\Api\Domain\Model\Video\InvalidStatusValueException;
@@ -16,7 +15,6 @@ use Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity\Video as VideoEn
 
 class DoctrineVideoRepository extends DoctrineRepository implements VideoRepositoryInterface
 {
-
     /**
      * @throws InvalidStatusValueException
      */
@@ -46,6 +44,8 @@ class DoctrineVideoRepository extends DoctrineRepository implements VideoReposit
             $video->title(),
             $video->duration(),
             new Status($video->status()),
+            null,
+            $video->image(),
         );
     }
 
@@ -63,8 +63,9 @@ class DoctrineVideoRepository extends DoctrineRepository implements VideoReposit
             $video->duration(),
             $video->status()->value(),
             new ArrayCollection(),
+            $video->image(),
             $video->createdAt(),
-            $video->updatedAt(),
+            null,
         );
 
         foreach ($video->subtitles()->getCollection() as $subtitle) {

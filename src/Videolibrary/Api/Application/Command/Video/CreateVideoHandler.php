@@ -36,6 +36,7 @@ class CreateVideoHandler
             $createVideoRequest->duration(),
             new Status($createVideoRequest->status()),
             $this->buildSubtitleCollection($createVideoRequest->subtitles()),
+            $createVideoRequest->image(),
         );
         $this->videoRepository->insert($video);
 
@@ -47,10 +48,12 @@ class CreateVideoHandler
         $subtitleCollection = SubtitleCollection::init();
         if (!empty($subtitles)) {
             foreach ($subtitles as $subtitle) {
-                $subtitleCollection->add(new Subtitle(
-                    new SubtitleId($this->idStringGenerator->generate()),
-                    $subtitle,
-                ));
+                $subtitleCollection->add(
+                    new Subtitle(
+                        new SubtitleId($this->idStringGenerator->generate()),
+                        $subtitle,
+                    ),
+                );
             }
         }
 

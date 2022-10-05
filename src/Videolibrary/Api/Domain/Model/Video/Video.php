@@ -2,34 +2,25 @@
 
 namespace Videolibrary\Api\Domain\Model\Video;
 
-use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Videolibrary\Api\Domain\Model\Subtitle\SubtitleCollection;
 
 class Video
 {
-    private VideoId $id;
-    private string $title;
-    private int $duration;
-    private Status $status;
-    private DateTimeImmutable $createdAt;
-    private DateTime $updatedAt;
-    private SubtitleCollection $subtitles;
+    private DateTimeInterface $createdAt;
+    private DateTimeInterface $updatedAt;
 
     public function __construct(
-        VideoId $id,
-        string $title,
-        int $duration,
-        Status $status,
-        SubtitleCollection $subtitles,
+        private VideoId $id,
+        private string $title,
+        private int $duration,
+        private Status $status,
+        private ?SubtitleCollection $subtitles,
+        private string $image,
     ) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->duration = $duration;
-        $this->status = $status;
-        $this->subtitles = $subtitles;
         $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTime();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function id(): VideoId
@@ -52,20 +43,23 @@ class Video
         return $this->status;
     }
 
-    public function createdAt(): DateTimeImmutable
+    public function createdAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function updatedAt(): DateTime
+    public function updatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function subtitles(): SubtitleCollection
+    public function subtitles(): ?SubtitleCollection
     {
         return $this->subtitles;
     }
 
-
+    public function image(): string
+    {
+        return $this->image;
+    }
 }
