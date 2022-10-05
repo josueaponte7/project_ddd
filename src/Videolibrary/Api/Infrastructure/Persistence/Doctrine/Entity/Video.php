@@ -3,7 +3,9 @@
 namespace Videolibrary\Api\Infrastructure\Persistence\Doctrine\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Videolibrary\Api\Domain\Model\Video\Video as VideoDomain;
 
 class Video
 {
@@ -19,6 +21,25 @@ class Video
     ) {
     }
 
+    public static function fromDomain(VideoDomain $video): self
+    {
+        $videoEntity = new self(
+            $video->id()->value(),
+            $video->title(),
+            $video->duration(),
+            $video->status()->value(),
+            new ArrayCollection(),
+            $video->image(),
+            $video->createdAt(),
+            null,
+        );
+        if (!$video->subtitles()->isEmpty()) {
+            foreach ($video->subtitles()->getCollection() as $subtitle) {
+                $videoEntity->addSubtitle(Subtitle::fromDomain($subtitle));
+            }
+        }
+        return $videoEntity;
+    }
 
     public function id(): string
     {
@@ -40,14 +61,19 @@ class Video
         return $this->status;
     }
 
+    public function image(): string
+    {
+        return $this->image;
+    }
+
     public function createdAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function updatedAt(): DateTimeInterface
+    public function subtitles(): Collection
     {
-        return $this->updatedAt;
+        return $this->subtitles;
     }
 
     public function addSubtitle(Subtitle $subtitle): void
@@ -56,13 +82,8 @@ class Video
         $this->subtitles->add($subtitle);
     }
 
-    public function subtitles(): Collection
+    public function updatedAt(): DateTimeInterface
     {
-        return $this->subtitles;
-    }
-
-    public function image(): string
-    {
-        return $this->image;
+        return $this->updatedAt;
     }
 }

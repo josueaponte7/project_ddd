@@ -51,8 +51,13 @@ class DoctrineVideoRepository extends DoctrineRepository implements VideoReposit
 
     public function insert(Video $video): void
     {
-        $this->entityManager->persist($this->toInfrastructure($video));
+        $this->entityManager->persist(VideoEntity::fromDomain($video));
         $this->entityManager->flush();
+    }
+
+    public function entityClassName(): string
+    {
+        return VideoEntity::class;
     }
 
     private function toInfrastructure(Video $video): VideoEntity
@@ -81,10 +86,5 @@ class DoctrineVideoRepository extends DoctrineRepository implements VideoReposit
             $subtitle->id()->value(),
             $subtitle->language(),
         );
-    }
-
-    public function entityClassName(): string
-    {
-        return VideoEntity::class;
     }
 }
