@@ -12,6 +12,7 @@ class VideoResponse
     private int $duration;
     private string $status;
     private SubtitleCollectionResponse $subtitles;
+    private string $image;
 
     public function __construct(Video $video)
     {
@@ -20,6 +21,7 @@ class VideoResponse
         $this->duration = $video->duration();
         $this->status = $video->status()->value();
         $this->subtitles = new SubtitleCollectionResponse($video->subtitles());
+        $this->image = $video->image();
     }
 
     public function id(): string
@@ -47,6 +49,12 @@ class VideoResponse
         return $this->subtitles;
     }
 
+    public function image(): string
+    {
+        return $this->image;
+    }
+
+
     final public function toArray(): array
     {
         return [
@@ -55,6 +63,7 @@ class VideoResponse
             'duration' => $this->duration(),
             'status' => $this->status(),
             'subtitles' => $this->subtitles()->toArray(),
+            'image' => $this->image(),
         ];
     }
 }
